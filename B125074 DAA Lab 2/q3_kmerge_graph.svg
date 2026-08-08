@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="700" viewBox="0 0 1100 700">
+<rect x="0" y="0" width="1100" height="700" fill="white"/>
+<text x="550" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Merging k Sorted Arrays: Sequential vs Pairwise</text>
+<line x1="110.00" y1="610.00" x2="870.00" y2="610.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="614.00" font-family="Arial" font-size="12" text-anchor="end">0</text>
+<line x1="110.00" y1="504.00" x2="870.00" y2="504.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="508.00" font-family="Arial" font-size="12" text-anchor="end">40.74</text>
+<line x1="110.00" y1="398.00" x2="870.00" y2="398.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="402.00" font-family="Arial" font-size="12" text-anchor="end">81.49</text>
+<line x1="110.00" y1="292.00" x2="870.00" y2="292.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="296.00" font-family="Arial" font-size="12" text-anchor="end">122.2</text>
+<line x1="110.00" y1="186.00" x2="870.00" y2="186.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="190.00" font-family="Arial" font-size="12" text-anchor="end">163</text>
+<line x1="110.00" y1="80.00" x2="870.00" y2="80.00" stroke="#dddddd" stroke-width="1"/>
+<text x="100" y="84.00" font-family="Arial" font-size="12" text-anchor="end">203.7</text>
+<line x1="110.00" y1="80" x2="110.00" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="110.00" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=2</text>
+<line x1="218.57" y1="80" x2="218.57" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="218.57" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=4</text>
+<line x1="327.14" y1="80" x2="327.14" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="327.14" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=8</text>
+<line x1="435.71" y1="80" x2="435.71" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="435.71" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=16</text>
+<line x1="544.29" y1="80" x2="544.29" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="544.29" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=32</text>
+<line x1="652.86" y1="80" x2="652.86" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="652.86" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=64</text>
+<line x1="761.43" y1="80" x2="761.43" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="761.43" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=128</text>
+<line x1="870.00" y1="80" x2="870.00" y2="610" stroke="#dddddd" stroke-width="1"/>
+<text x="870.00" y="632" font-family="Arial" font-size="12" text-anchor="middle">k=256</text>
+<line x1="110" y1="610" x2="870" y2="610" stroke="black" stroke-width="2"/>
+<line x1="110" y1="610" x2="110" y2="80" stroke="black" stroke-width="2"/>
+<text x="490" y="675" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">Number of Arrays (k)</text>
+<text x="25" y="345" font-family="Arial" font-size="16" font-weight="bold" transform="rotate(-90 25 345)" text-anchor="middle">Average Time (ms)</text>
+<polyline fill="none" stroke="#e41a1c" stroke-width="3" points="110.00,609.48 218.57,608.96 327.14,608.96 435.71,605.84 544.29,596.99 652.86,568.37 761.43,503.33 870.00,128.18 "/>
+<circle cx="110.00" cy="609.48" r="4" fill="#e41a1c"/>
+<circle cx="218.57" cy="608.96" r="4" fill="#e41a1c"/>
+<circle cx="327.14" cy="608.96" r="4" fill="#e41a1c"/>
+<circle cx="435.71" cy="605.84" r="4" fill="#e41a1c"/>
+<circle cx="544.29" cy="596.99" r="4" fill="#e41a1c"/>
+<circle cx="652.86" cy="568.37" r="4" fill="#e41a1c"/>
+<circle cx="761.43" cy="503.33" r="4" fill="#e41a1c"/>
+<circle cx="870.00" cy="128.18" r="4" fill="#e41a1c"/>
+<polyline fill="none" stroke="#377eb8" stroke-width="3" points="110.00,610.00 218.57,609.48 327.14,608.44 435.71,606.88 544.29,602.20 652.86,595.43 761.43,575.14 870.00,537.15 "/>
+<circle cx="110.00" cy="610.00" r="4" fill="#377eb8"/>
+<circle cx="218.57" cy="609.48" r="4" fill="#377eb8"/>
+<circle cx="327.14" cy="608.44" r="4" fill="#377eb8"/>
+<circle cx="435.71" cy="606.88" r="4" fill="#377eb8"/>
+<circle cx="544.29" cy="602.20" r="4" fill="#377eb8"/>
+<circle cx="652.86" cy="595.43" r="4" fill="#377eb8"/>
+<circle cx="761.43" cy="575.14" r="4" fill="#377eb8"/>
+<circle cx="870.00" cy="537.15" r="4" fill="#377eb8"/>
+<text x="890" y="100" font-family="Arial" font-size="15" font-weight="bold">Method</text>
+<line x1="890" y1="130" x2="915" y2="130" stroke="#e41a1c" stroke-width="4"/>
+<text x="925" y="134" font-family="Arial" font-size="12">Method 1: Sequential</text>
+<line x1="890" y1="160" x2="915" y2="160" stroke="#377eb8" stroke-width="4"/>
+<text x="925" y="164" font-family="Arial" font-size="12">Method 2: Pairwise</text>
+</svg>
