@@ -1,272 +1,285 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <limits.h>
 
 /*
 ===========================================================
-QUESTION 3: LONGEST COMMON SUBSEQUENCE (LCS)
+QUESTION 4: MATRIX CHAIN MULTIPLICATION
 ===========================================================
 
-Implement the Longest Common Subsequence (LCS) algorithm
+Write a program to implement Matrix Chain Multiplication
 using Dynamic Programming.
 
-Given two strings, find the length of their longest common
-subsequence and display the subsequence.
+Given the dimensions of N-1 matrices in an array arr[],
+determine the minimum number of scalar multiplications
+required to multiply the complete matrix chain.
 
-Analyze the complexity of the algorithm.
+
+EXAMPLE:
+
+Input:
+    N = 4
+    arr[] = {10, 30, 5, 60}
+
+Matrices:
+    A1 = 10 x 30
+    A2 = 30 x 5
+    A3 = 5 x 60
+
+Output:
+    4500
+
+Time Complexity:
+    O(N^3)
+
+Space Complexity:
+    O(N^2)
 
 
------------------------------------------------------------
+===========================================================
 PSEUDOCODE
------------------------------------------------------------
+===========================================================
 
-LCS(X, Y)
+MATRIX_CHAIN(arr, N)
 
-    m = length of X
-    n = length of Y
+    Number of matrices = N - 1
 
-    Create dp[m+1][n+1]
+    Create DP table dp[N][N]
 
-    for i = 0 to m
+    for i = 1 to N-1
+        dp[i][i] = 0
 
-        for j = 0 to n
+    for chainLength = 2 to N-1
 
-            if i == 0 OR j == 0
+        for i = 1 to N-chainLength
 
-                dp[i][j] = 0
+            j = i + chainLength - 1
 
-            else if X[i-1] == Y[j-1]
+            dp[i][j] = infinity
 
-                dp[i][j] =
-                    dp[i-1][j-1] + 1
+            for k = i to j-1
 
-            else
+                cost =
+                    dp[i][k]
+                    + dp[k+1][j]
+                    + arr[i-1] * arr[k] * arr[j]
 
-                dp[i][j] =
-                    maximum(
-                        dp[i-1][j],
-                        dp[i][j-1]
-                    )
+                if cost < dp[i][j]
 
-    length = dp[m][n]
+                    dp[i][j] = cost
 
-    Start from dp[m][n]
-
-    while i > 0 AND j > 0
-
-        if X[i-1] == Y[j-1]
-
-            Store X[i-1]
-            i = i - 1
-            j = j - 1
-
-        else if dp[i-1][j] > dp[i][j-1]
-
-            i = i - 1
-
-        else
-
-            j = j - 1
-
-    Reverse the stored characters
-
-    Display the LCS
+    return dp[1][N-1]
 
 
------------------------------------------------------------
-WHAT IS A SUBSEQUENCE?
------------------------------------------------------------
-
-A subsequence is obtained by deleting zero or more
-characters without changing the order of the remaining
-characters.
-
-For example:
-
-    ABCDE
-
-    ACE
-
-is a subsequence because A, C and E occur in the same
-order.
-
-
------------------------------------------------------------
+===========================================================
 COMPLEXITY ANALYSIS
------------------------------------------------------------
+===========================================================
 
-Let:
+There are O(N^2) subproblems.
 
-    m = length of first string
-    n = length of second string
+For every subproblem, we try O(N) possible
+split positions.
 
-Time Complexity  : O(m * n)
+Therefore:
 
-Space Complexity : O(m * n)
+    Time Complexity = O(N^3)
 
-The DP table contains (m+1) x (n+1) states and every
-state is calculated once.
+The DP table requires:
 
+    Space Complexity = O(N^2)
 
 ===========================================================
 */
 
-int maximum(int a, int b)
-{
-    return (a > b) ? a : b;
-}
-
 int main()
 {
-    char X[100];
-    char Y[100];
+    int N;
 
-    printf("Enter first string: ");
-    scanf("%99s", X);
-
-    printf("Enter second string: ");
-    scanf("%99s", Y);
-
-    int m = strlen(X);
-    int n = strlen(Y);
+    printf("Enter N: ");
+    scanf("%d", &N);
 
     /*
-        Allocate the DP table.
+        N dimensions represent N-1 matrices.
+
+        Example:
+
+        N = 4
+
+        arr = {10, 30, 5, 60}
+
+        represents:
+
+        A1 = 10 x 30
+        A2 = 30 x 5
+        A3 = 5 x 60
     */
 
-    int **dp = (int **)malloc((m + 1) * sizeof(int *));
+    if (N < 2)
+    {
+        printf("N must be at least 2.\n");
+        return 1;
+    }
 
-    if (dp == NULL)
+    int *arr = (int *)malloc(N * sizeof(int));
+
+    if (arr == NULL)
     {
         printf("Memory allocation failed.\n");
         return 1;
     }
 
-    for (int i = 0; i <= m; i++)
+    printf("Enter %d dimensions:\n", N);
+
+    for (int i = 0; i < N; i++)
     {
-        dp[i] = (int *)malloc((n + 1) * sizeof(int));
+        scanf("%d", &arr[i]);
+    }
+
+    /*
+        dp[i][j] stores the minimum number of scalar
+        multiplications required to multiply matrices
+        Ai through Aj.
+    */
+
+    long long **dp =
+        (long long **)malloc(N * sizeof(long long *));
+
+    if (dp == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        free(arr);
+        return 1;
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        dp[i] =
+            (long long *)malloc(N * sizeof(long long));
 
         if (dp[i] == NULL)
         {
             printf("Memory allocation failed.\n");
+
+            for (int j = 0; j < i; j++)
+            {
+                free(dp[j]);
+            }
+
+            free(dp);
+            free(arr);
+
             return 1;
         }
     }
 
     /*
-        Fill the DP table.
+        A single matrix requires zero multiplications.
+
+        Therefore:
+
+            dp[i][i] = 0
     */
 
-    for (int i = 0; i <= m; i++)
+    for (int i = 1; i < N; i++)
     {
-        for (int j = 0; j <= n; j++)
-        {
-            /*
-                Empty string has LCS length 0.
-            */
-            if (i == 0 || j == 0)
-            {
-                dp[i][j] = 0;
-            }
-
-            /*
-                Characters match.
-
-                Therefore, extend the previous LCS.
-            */
-            else if (X[i - 1] == Y[j - 1])
-            {
-                dp[i][j] =
-                    dp[i - 1][j - 1] + 1;
-            }
-
-            /*
-                Characters do not match.
-
-                Take the better result obtained by
-                removing one character from either string.
-            */
-            else
-            {
-                dp[i][j] =
-                    maximum(
-                        dp[i - 1][j],
-                        dp[i][j - 1]
-                    );
-            }
-        }
-    }
-
-    int lcsLength = dp[m][n];
-
-    /*
-        Allocate memory for the LCS.
-    */
-    char *lcs =
-        (char *)malloc((lcsLength + 1) * sizeof(char));
-
-    if (lcs == NULL)
-    {
-        printf("Memory allocation failed.\n");
-        return 1;
+        dp[i][i] = 0;
     }
 
     /*
-        Trace backwards through the DP table to
-        reconstruct the actual LCS.
+        chainLength represents the number of matrices
+        in the current subchain.
+
+        We start with 2 matrices, then 3, then 4, etc.
     */
 
-    int i = m;
-    int j = n;
-    int index = lcsLength - 1;
-
-    while (i > 0 && j > 0)
+    for (int chainLength = 2;
+         chainLength <= N - 1;
+         chainLength++)
     {
         /*
-            Matching characters belong to the LCS.
+            i represents the starting matrix.
         */
-        if (X[i - 1] == Y[j - 1])
-        {
-            lcs[index] = X[i - 1];
 
-            index--;
-
-            i--;
-            j--;
-        }
-
-        /*
-            Move in the direction of the larger
-            DP value.
-        */
-        else if (dp[i - 1][j] > dp[i][j - 1])
+        for (int i = 1;
+             i <= N - chainLength;
+             i++)
         {
-            i--;
-        }
-        else
-        {
-            j--;
+            /*
+                j represents the ending matrix.
+            */
+
+            int j = i + chainLength - 1;
+
+            /*
+                Initially assume that the cost is
+                extremely large.
+            */
+
+            dp[i][j] = LLONG_MAX;
+
+            /*
+                Try every possible position to split
+                the matrix chain.
+
+                Left side:
+                    Ai ... Ak
+
+                Right side:
+                    A(k+1) ... Aj
+            */
+
+            for (int k = i; k < j; k++)
+            {
+                /*
+                    Total cost consists of:
+
+                    1. Cost of multiplying left chain
+                    2. Cost of multiplying right chain
+                    3. Cost of multiplying the two
+                       resulting matrices
+                */
+
+                long long cost =
+                    dp[i][k]
+                    +
+                    dp[k + 1][j]
+                    +
+                    (long long)arr[i - 1]
+                    * arr[k]
+                    * arr[j];
+
+                /*
+                    Keep the minimum cost.
+                */
+
+                if (cost < dp[i][j])
+                {
+                    dp[i][j] = cost;
+                }
+            }
         }
     }
 
-    lcs[lcsLength] = '\0';
-
-    printf("\nLength of LCS = %d\n", lcsLength);
-
-    printf("Longest Common Subsequence = %s\n", lcs);
-
     /*
-        Free allocated memory.
+        dp[1][N-1] contains the minimum number of
+        scalar multiplications required to multiply
+        the complete matrix chain.
     */
 
-    free(lcs);
+    printf("\nMinimum number of scalar multiplications = %lld\n",
+           dp[1][N - 1]);
 
-    for (i = 0; i <= m; i++)
+    /*
+        Free dynamically allocated memory.
+    */
+
+    for (int i = 0; i < N; i++)
     {
         free(dp[i]);
     }
 
     free(dp);
+    free(arr);
 
     return 0;
 }
